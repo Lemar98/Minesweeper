@@ -108,13 +108,11 @@ public class Board {
 
     private void fillByMines() {
         ThreadLocalRandom random = ThreadLocalRandom.current();
+        List<Slot> freeSlots = new ArrayList<>(slots);
         for (int i = 0; i < minesCount; i++) {
-            int y, x;
-            do {
-                y = random.nextInt(height);
-                x = random.nextInt(width);
-            } while (getSlot(y, x).isMine());
-            getSlot(y, x).setMine(true);
+            Slot slot = freeSlots.get(random.nextInt(freeSlots.size()));
+            slot.setMine(true);
+            freeSlots.remove(slot);
         }
     }
 
